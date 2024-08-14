@@ -1,0 +1,21 @@
+{
+  "name": "@ryu/md2pdf",
+  "version": "0.0.1",
+  "exports": {
+    ".": "./src/md-to-pdf.ts",
+    "./cli": "./src/cli.ts"
+  },
+  "tasks": {
+    "cli": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --",
+    "dev": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -- README.md"
+  },
+  "imports": {
+    "@astral/astral": "jsr:@astral/astral@^0.4.5",
+    "@hono/hono": "jsr:@hono/hono@^4.5.5",
+    "@std/assert": "jsr:@std/assert@^1.0.2",
+    "@std/cli": "jsr:@std/cli@^1.0.3",
+    "@std/fmt": "jsr:@std/fmt@^1.0.0",
+    "@std/fs": "jsr:@std/fs@^1.0.1",
+    "md4w": "npm:md4w@^0.2.6"
+  }
+}
