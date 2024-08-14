@@ -13,10 +13,27 @@
 
 import { Spinner } from "@std/cli/spinner";
 import { parseArgs } from "@std/cli/parse-args";
-import { underline } from "@std/fmt/colors";
+import { bgBlue, underline } from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
+
+async function generatePdfFromMarkdown(path: string) {
+  const pdfName = getFilename(path) + ".pdf";
+
+  spinner.message = " generating PDF from " + underline(path);
+  spinner.start();
+  await mdToPdf(path).then(
+    (pdf) => {
+      Deno.writeFileSync(
+        pdfName,
+        pdf,
+      );
+      spinner.stop();
+      console.log("✅ generated " + underline(pdfName));
+    },
+  );
+}
 
 const args = await parseArgs(Deno.args);
 const spinner = new Spinner({
@@ -41,20 +58,32 @@ if (args._) {
   }
 }
 
-(async () => {
+await (async () => {
   for (let i = 0; i < paths.length; i++) {
-    spinner.start();
-    spinner.message = " generating PDF from " + underline(paths[i]);
-    const pdfName = getFilename(paths[i]) + ".pdf";
-    await mdToPdf(paths[i]).then(
-      (pdf) => {
-        Deno.writeFileSync(
-          pdfName,
-          pdf,
-        );
-        spinner.stop();
-        console.log("✅ generated " + underline(pdfName));
-      },
-    );
+    await generatePdfFromMarkdown(paths[i]);
   }
 })();
+
+if (args.w || args.watch) {
+  console.log("\n" + bgBlue(" watching for changes ") + "\n");
+
+  let pastRealPath: string | undefined;
+  let pastMTime: string | undefined;
+  const watcher = Deno.watchFs(paths, { recursive: false });
+  for await (const event of watcher) {
+    for (let i = 0; i < paths.length; i++) {
+      const realPath = await Deno.realPath(paths[i]);
+      const stat = await Deno.stat(event.paths[i]);
+      if (
+        realPath === event.paths[0] &&
+        (!pastRealPath ||
+          !(stat.mtime?.toString() === pastMTime && realPath === pastRealPath))
+      ) {
+        pastRealPath = realPath;
+        pastMTime = stat.mtime?.toString();
+        await generatePdfFromMarkdown(paths[0]);
+      }
+    }
+  }
+  watcher.close();
+}

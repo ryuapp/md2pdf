@@ -10,10 +10,13 @@ deno install -grA jsr:@ryu/md2pdf/cli
 
 Note: If you want to update the CLI, please reinstall with `-f` flag.
 
-## Usage
+## Command
 
 ```sh
-md2pdf [FILE]...
+Usage: md2pdf [OPTIONS] [FILE]...
+
+Options:
+  -w, --watch    Watch for file changes.
 ```
 
 ## Related
