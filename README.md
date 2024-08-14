@@ -5,7 +5,7 @@ A simple CLI tool for converting markdown to PDF.
 ## Installation
 
 ```sh
-deno install -gA jsr:@ryu/md2pdf/cli
+deno install -grA jsr:@ryu/md2pdf/cli
 ```
 
 Note: If you want to update the CLI, please reinstall with `-f` flag.
