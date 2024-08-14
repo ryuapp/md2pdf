@@ -13,7 +13,7 @@
 
 import { Spinner } from "@std/cli/spinner";
 import { parseArgs } from "@std/cli/parse-args";
-import { bgBlue, underline } from "@std/fmt/colors";
+import { bgBlue, gray, green, underline, yellow } from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
@@ -36,6 +36,21 @@ async function generatePdfFromMarkdown(path: string) {
 }
 
 const args = await parseArgs(Deno.args);
+
+if (args.h || args.help) {
+  const help = `md2pdf: ${
+    green("A simple CLI tool for converting markdown to PDF.")
+  }
+
+${gray("Usage:")} ${green("md2pdf [OPTION]... [FILE]...")}
+
+${yellow("Options:")}
+  ${green("-w, --watch")}    Watch for file changes.
+  ${green("-h, --help")}     Print help.`;
+  console.log(help);
+  Deno.exit(0);
+}
+
 const spinner = new Spinner({
   message: "Loading...",
   color: "yellow",

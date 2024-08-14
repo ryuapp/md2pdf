@@ -13,10 +13,13 @@ Note: If you want to update the CLI, please reinstall with `-f` flag.
 ## Command
 
 ```sh
-Usage: md2pdf [OPTIONS] [FILE]...
+md2pdf: A simple CLI tool for converting markdown to PDF.
+
+Usage: md2pdf [OPTION]... [FILE]...
 
 Options:
   -w, --watch    Watch for file changes.
+  -h, --help     Print help.
 ```
 
 ## Related
