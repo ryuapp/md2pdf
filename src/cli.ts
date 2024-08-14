@@ -1,5 +1,16 @@
 #!/usr/bin/env -S deno run
 
+/**
+ * A simple CLI tool for converting markdown to PDF.
+ *
+ * @example
+ * ```sh
+ * md2pdf [FILE]...
+ * ```
+ *
+ * @module
+ */
+
 import { Spinner } from "@std/cli/spinner";
 import { parseArgs } from "@std/cli/parse-args";
 import { underline } from "@std/fmt/colors";
