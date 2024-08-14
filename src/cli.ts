@@ -5,7 +5,7 @@ import { parseArgs } from "@std/cli/parse-args";
 import { underline } from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
-import { getFilename } from "./utils.ts";
+import { getFilename } from "./utils/filename.ts";
 
 const args = await parseArgs(Deno.args);
 const spinner = new Spinner({

@@ -1,5 +1,5 @@
 import { launch } from "@astral/astral";
-import { DEFAULT_PORT, launchHttpServer } from "./server.ts";
+import { DEFAULT_PORT, launchHttpServer } from "./utils/server.ts";
 
 /**
  * Convert a markdown file to PDF.

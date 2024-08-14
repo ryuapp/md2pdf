@@ -14,9 +14,8 @@ await initMd4w("small");
 export function launchHttpServer(
   path: string,
 ): Deno.HttpServer<Deno.NetAddr> {
-  const app = new Hono({ router: new LinearRouter() });
   const decoder = new TextDecoder("utf-8");
-
+  const app = new Hono({ router: new LinearRouter() });
   app.get("/", async (c) => {
     const content = mdToHtml(
       decoder.decode(await Deno.readFile(path)),
