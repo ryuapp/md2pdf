@@ -20,6 +20,7 @@ Usage: md2pdf [OPTION]... [FILE]...
 Options:
   -w, --watch    Watch for file changes.
   -h, --help     Print help.
+  --css          Set CSS file used for rendering.
 ```
 
 ## Related

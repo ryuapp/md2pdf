@@ -1,5 +1,6 @@
 import { launch } from "@astral/astral";
 import { DEFAULT_PORT, launchHttpServer } from "./utils/server.ts";
+import type { MdToPdfOptions } from "./types.ts";
 
 /**
  * Convert a markdown file to PDF.
@@ -12,10 +13,13 @@ import { DEFAULT_PORT, launchHttpServer } from "./utils/server.ts";
  * Deno.writeFileSync("README.pdf", pdf);
  * ```
  */
-export async function mdToPdf(path: string): Promise<Uint8Array> {
+export async function mdToPdf(
+  path: string,
+  options?: MdToPdfOptions,
+): Promise<Uint8Array> {
   const [browser, server] = await Promise.all([
     launch(),
-    launchHttpServer(path),
+    launchHttpServer(path, options),
   ]);
 
   const page = await browser.newPage(`http://localhost:${DEFAULT_PORT}`);

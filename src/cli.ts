@@ -17,8 +17,9 @@ import { bgBlue, gray, green, underline, yellow } from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
+import type { MdToPdfOptions } from "./types.ts";
 
-function printHelp() {
+function printHelp(): void {
   const help = `md2pdf: ${
     green("A simple CLI tool for converting markdown to PDF.")
   }
@@ -27,16 +28,22 @@ ${gray("Usage:")} ${green("md2pdf [OPTION]... [FILE]...")}
 
 ${yellow("Options:")}
   ${green("-w, --watch")}    Watch for file changes.
-  ${green("-h, --help")}     Print help.`;
+  ${green("-h, --help")}     Print help.
+  ${green("--css")}          Set CSS file used for rendering.`;
   console.log(help);
 }
 
-async function generatePdfFromMarkdown(path: string) {
+function getOptions(args: { [css: string]: string }): MdToPdfOptions {
+  const css = args?.css ?? "";
+  return { css };
+}
+
+async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
   const pdfName = getFilename(path) + ".pdf";
 
   spinner.message = " generating PDF from " + underline(path);
   spinner.start();
-  await mdToPdf(path).then(
+  await mdToPdf(path, options).then(
     (pdf) => {
       Deno.writeFileSync(
         pdfName,
@@ -55,6 +62,7 @@ if (args.h || args.help) {
   Deno.exit(0);
 }
 
+const options = getOptions(args);
 const spinner = new Spinner({
   message: "Loading...",
   color: "yellow",
@@ -84,7 +92,7 @@ if (paths.length < 1) {
 
 await (async () => {
   for (let i = 0; i < paths.length; i++) {
-    await generatePdfFromMarkdown(paths[i]);
+    await generatePdfFromMarkdown(paths[i], options);
   }
 })();
 
