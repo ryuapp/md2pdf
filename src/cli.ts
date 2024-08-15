@@ -148,7 +148,7 @@ if (args.w || args.watch) {
       ) {
         pastRealPath = realPath;
         pastMTime = stat.mtime?.toString();
-        await generatePdfFromMarkdown(paths[0]);
+        await generatePdfFromMarkdown(paths[0], args);
       }
     }
   }
