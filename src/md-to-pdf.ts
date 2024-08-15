@@ -17,11 +17,9 @@ export async function mdToPdf(
   path: string,
   options?: MdToPdfOptions,
 ): Promise<Uint8Array> {
-  const [browser, server] = await Promise.all([
-    launch(),
-    launchHttpServer(path, options),
-  ]);
+  const server = launchHttpServer(path, options);
 
+  const browser = await launch();
   const page = await browser.newPage(`http://localhost:${DEFAULT_PORT}`);
   const pdf = await page.pdf();
 
