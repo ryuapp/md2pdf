@@ -13,7 +13,14 @@
 
 import { Spinner } from "@std/cli/spinner";
 import { parseArgs } from "@std/cli/parse-args";
-import { bgBlue, gray, green, red, underline, yellow } from "@std/fmt/colors";
+import {
+  bgBlue,
+  brightRed,
+  gray,
+  green,
+  underline,
+  yellow,
+} from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
@@ -26,7 +33,9 @@ async function validateArgs(
 ): Promise<boolean> {
   if (typeof args.css === "string") {
     if (!(await exists(args.css, { isFile: true, isReadable: true }))) {
-      console.error(`${red("error")}: Set CSS file is not found: ${args.css}`);
+      console.error(
+        `${brightRed("error")}: Set CSS file is not found: ${args.css}`,
+      );
       return false;
     }
   }
@@ -101,8 +110,19 @@ if (args._) {
 }
 
 if (paths.length < 1) {
-  printHelp();
-  Deno.exit(0);
+  const exitCode = args._.length ? 1 : 0;
+  if (exitCode) {
+    console.error(
+      `${
+        brightRed("error")
+      }: Set a valid markdown file path you wanna convert to PDF\n`,
+      "      e.g.) md2pdf README.md\n",
+    );
+    console.error("For more information, try '--help'.");
+  } else {
+    printHelp();
+  }
+  Deno.exit(exitCode);
 }
 
 await (async () => {
