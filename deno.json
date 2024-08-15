@@ -1,6 +1,6 @@
 {
   "name": "@ryu/md2pdf",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "exports": {
     ".": "./src/md-to-pdf.ts",
     "./cli": "./src/cli.ts"
