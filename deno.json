@@ -22,5 +22,6 @@
     "@std/fmt": "jsr:@std/fmt@^1.0.0",
     "@std/fs": "jsr:@std/fs@^1.0.1",
     "md4w": "npm:md4w@^0.2.6"
-  }
+  },
+  "exclude": [".gitattributes", ".github", "src/testdata", "**/*/*_test.ts"]
 }
