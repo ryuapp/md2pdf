@@ -33,11 +33,6 @@ ${yellow("Options:")}
   console.log(help);
 }
 
-function getOptions(args: { [css: string]: string }): MdToPdfOptions {
-  const css = args?.css ?? "";
-  return { css };
-}
-
 async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
   const pdfName = getFilename(path) + ".pdf";
 
@@ -55,14 +50,16 @@ async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
   );
 }
 
-const args = await parseArgs(Deno.args);
+const args = await parseArgs(Deno.args, {
+  boolean: ["w", "watch", "h", "help"],
+  string: ["css"],
+});
 
 if (args.h || args.help) {
   printHelp();
   Deno.exit(0);
 }
 
-const options = getOptions(args);
 const spinner = new Spinner({
   message: "Loading...",
   color: "yellow",
@@ -92,7 +89,7 @@ if (paths.length < 1) {
 
 await (async () => {
   for (let i = 0; i < paths.length; i++) {
-    await generatePdfFromMarkdown(paths[i], options);
+    await generatePdfFromMarkdown(paths[i], args);
   }
 })();
 
