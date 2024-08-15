@@ -10,6 +10,7 @@
     "dev": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -- README.md",
     "dev:help": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --help",
     "dev:css": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts  --css=src/testdata/bluecode.css -- README.md",
+    "dev:invalidcss": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts  --css=src/testdata/redcode.css -- README.md",
     "dev:watch": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --watch --  README.md"
   },
   "imports": {

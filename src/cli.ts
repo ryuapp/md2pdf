@@ -13,11 +13,25 @@
 
 import { Spinner } from "@std/cli/spinner";
 import { parseArgs } from "@std/cli/parse-args";
-import { bgBlue, gray, green, underline, yellow } from "@std/fmt/colors";
+import { bgBlue, gray, green, red, underline, yellow } from "@std/fmt/colors";
 import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
 import type { MdToPdfOptions } from "./types.ts";
+
+async function validateArgs(
+  args: {
+    css?: string;
+  },
+): Promise<boolean> {
+  if (typeof args.css === "string") {
+    if (!(await exists(args.css, { isFile: true, isReadable: true }))) {
+      console.error(`${red("error")}: Set CSS file is not found: ${args.css}`);
+      return false;
+    }
+  }
+  return true;
+}
 
 function printHelp(): void {
   const help = `md2pdf: ${
@@ -50,12 +64,16 @@ async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
   );
 }
 
+// Inline
+
 const args = await parseArgs(Deno.args, {
   boolean: ["w", "watch", "h", "help"],
   string: ["css"],
 });
 
-if (args.h || args.help) {
+if (!(await validateArgs(args))) {
+  Deno.exit(1);
+} else if (args.h || args.help) {
   printHelp();
   Deno.exit(0);
 }
