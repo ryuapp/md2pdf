@@ -11,7 +11,7 @@
  * @module
  */
 
-import { Spinner } from "@std/cli/spinner";
+import { Spinner } from "@std/cli/unstable-spinner";
 import { parseArgs } from "@std/cli/parse-args";
 import {
   bgBlue,
