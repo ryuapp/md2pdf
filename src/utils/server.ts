@@ -2,6 +2,7 @@ import { Hono } from "@hono/hono/tiny";
 import { LinearRouter } from "@hono/hono/router/linear-router";
 import { init as initMd4w, mdToHtml } from "md4w";
 import type { MdToPdfOptions } from "../types.ts";
+import { serveFile } from "@std/http/file-server";
 
 export const DEFAULT_PORT = 33433;
 
@@ -35,6 +36,17 @@ export function launchHttpServer(
           </body>
         </html>`,
     );
+  });
+  app.get("*", async (c) => {
+    const filePath = "." + decodeURI(c.req.path);
+    try {
+      const fileInfo = await Deno.lstat(filePath);
+      if (fileInfo.isFile) {
+        return serveFile(c.req.raw, filePath);
+      }
+    } catch (_e) {
+      return c.notFound();
+    }
   });
   return Deno.serve({ onListen: () => "", port: DEFAULT_PORT }, app.fetch);
 }
