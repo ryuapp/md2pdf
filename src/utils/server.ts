@@ -3,6 +3,7 @@ import { LinearRouter } from "@hono/hono/router/linear-router";
 import { init as initMd4w, mdToHtml } from "md4w";
 import type { MdToPdfOptions } from "../types.ts";
 import { serveFile } from "@std/http/file-server";
+import { getFilename } from "./filename.ts";
 
 export const DEFAULT_PORT = 33433;
 
@@ -26,9 +27,11 @@ export function launchHttpServer(
     const content = mdToHtml(
       decoder.decode(await Deno.readFile(path)),
     );
+    const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
     return c.html(
       `<html>
           <head>
+          <title>${title}</title>
           <style>${css}</style>
           </head>
           <body>
