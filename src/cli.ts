@@ -21,7 +21,6 @@ import {
   underline,
   yellow,
 } from "@std/fmt/colors";
-import { exists } from "@std/fs/exists";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
 import type { MdToPdfOptions } from "./types.ts";
@@ -31,8 +30,10 @@ async function validateArgs(
     css?: string;
   },
 ): Promise<boolean> {
-  if (typeof args.css === "string") {
-    if (!(await exists(args.css, { isFile: true, isReadable: true }))) {
+  if (args.css) {
+    try {
+      await Deno.lstat(args.css);
+    } catch (_e) {
       console.error(
         `${brightRed("error")}: Set CSS file is not found: ${args.css}`,
       );
@@ -97,14 +98,13 @@ const paths: Array<string> = [];
 if (args._) {
   for await (const path of args._) {
     if (typeof path !== "string") continue;
-    if (await exists(path, { isFile: true })) {
+    try {
+      await Deno.lstat(path);
       paths.push(path);
-    } else {
-      if (await exists(path)) {
-        console.error("md2pdf: " + path + ": Is not a file");
-      } else {
-        console.error("md2pdf: " + path + ": Not found");
-      }
+    } catch (e) {
+      console.error(
+        `${brightRed("error")}: ${e}`,
+      );
     }
   }
 }

@@ -1,8 +1,5 @@
-import { Hono } from "@hono/hono/tiny";
-import { LinearRouter } from "@hono/hono/router/linear-router";
 import { init as initMd4w, mdToHtml } from "md4w";
 import type { MdToPdfOptions } from "../types.ts";
-import { serveFile } from "@std/http/file-server";
 import { getFilename } from "./filename.ts";
 
 export const DEFAULT_PORT = 33433;
@@ -18,38 +15,52 @@ export function launchHttpServer(
   path: string,
   options?: MdToPdfOptions,
 ): Deno.HttpServer<Deno.NetAddr> {
-  const decoder = new TextDecoder("utf-8");
-  const app = new Hono({ router: new LinearRouter() });
-  app.get("/", async (c) => {
-    const css = options?.css
-      ? await decoder.decode(await Deno.readFile(options?.css))
-      : "";
-    const content = mdToHtml(
-      decoder.decode(await Deno.readFile(path)),
-    );
-    const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
-    return c.html(
-      `<html>
-          <head>
-          <title>${title}</title>
-          <style>${css}</style>
-          </head>
-          <body>
-            ${content}
-          </body>
-        </html>`,
-    );
-  });
-  app.get("*", async (c) => {
-    const filePath = "." + decodeURI(c.req.path);
-    try {
-      const fileInfo = await Deno.lstat(filePath);
-      if (fileInfo.isFile) {
-        return serveFile(c.req.raw, filePath);
+  const handler: Deno.ServeHandler = async (req) => {
+    const url = new URL(req.url);
+
+    if (url.pathname === "/") {
+      const decoder = new TextDecoder("utf-8");
+      const css = options?.css
+        ? decoder.decode(await Deno.readFile(options?.css))
+        : "";
+      const content = mdToHtml(
+        decoder.decode(await Deno.readFile(path)),
+      );
+      const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
+      return new Response(
+        `<html>
+            <head>
+            <title>${title}</title>
+            <style>${css}</style>
+            </head>
+            <body>
+              ${content}
+            </body>
+          </html>`,
+        { headers: { "Content-Type": "text/html" } },
+      );
+    } else {
+      const filePath = "." + decodeURI(url.pathname);
+      try {
+        const fileInfo = await Deno.lstat(filePath);
+        if (fileInfo.isFile) {
+          const file = await Deno.open(filePath);
+          return new Response(file.readable);
+        }
+      } catch (_e) {
+        return notFound();
       }
-    } catch (_e) {
-      return c.notFound();
     }
-  });
-  return Deno.serve({ onListen: () => "", port: DEFAULT_PORT }, app.fetch);
+    return notFound();
+  };
+
+  return Deno.serve({ onListen: () => "", port: DEFAULT_PORT }, handler);
+}
+
+/**
+ * A response for 404 Not Found.
+ * @internal
+ */
+function notFound(): Response {
+  return new Response("Not Found", { status: 404 });
 }

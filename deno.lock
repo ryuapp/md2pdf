@@ -3,26 +3,15 @@
   "specifiers": {
     "jsr:@astral/astral@~0.4.5": "0.4.9",
     "jsr:@deno-library/progress@^1.5.1": "1.5.1",
-    "jsr:@hono/hono@^4.5.5": "4.6.12",
     "jsr:@std/assert@^1.0.2": "1.0.8",
     "jsr:@std/async@1": "1.0.9",
-    "jsr:@std/cli@1.0.6": "1.0.6",
-    "jsr:@std/cli@^1.0.6": "1.0.6",
-    "jsr:@std/encoding@^1.0.5": "1.0.5",
+    "jsr:@std/cli@1.0.7": "1.0.7",
     "jsr:@std/fmt@1": "1.0.3",
     "jsr:@std/fmt@1.0.3": "1.0.3",
-    "jsr:@std/fmt@^1.0.3": "1.0.3",
     "jsr:@std/fs@1": "1.0.6",
-    "jsr:@std/fs@^1.0.1": "1.0.6",
-    "jsr:@std/html@^1.0.3": "1.0.3",
-    "jsr:@std/http@^1.0.11": "1.0.11",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/io@0.225.0": "0.225.0",
-    "jsr:@std/media-types@^1.1.0": "1.1.0",
-    "jsr:@std/net@^1.0.4": "1.0.4",
     "jsr:@std/path@1": "1.0.8",
-    "jsr:@std/path@^1.0.8": "1.0.8",
-    "jsr:@std/streams@^1.0.8": "1.0.8",
     "jsr:@zip-js/zip-js@^2.7.52": "2.7.53",
     "npm:md4w@~0.2.6": "0.2.6"
   },
@@ -32,8 +21,8 @@
       "dependencies": [
         "jsr:@deno-library/progress",
         "jsr:@std/async",
-        "jsr:@std/fs@1",
-        "jsr:@std/path@1",
+        "jsr:@std/fs",
+        "jsr:@std/path",
         "jsr:@zip-js/zip-js"
       ]
     },
@@ -44,9 +33,6 @@
         "jsr:@std/io"
       ]
     },
-    "@hono/hono@4.6.12": {
-      "integrity": "fa0b97fa7c3292f0d9957109ac07a475fe485868795b71b8e3114c284152cdb5"
-    },
     "@std/assert@1.0.8": {
       "integrity": "ebe0bd7eb488ee39686f77003992f389a06c3da1bbd8022184804852b2fa641b",
       "dependencies": [
@@ -56,36 +42,14 @@
     "@std/async@1.0.9": {
       "integrity": "c6472fd0623b3f3daae023cdf7ca5535e1b721dfbf376562c0c12b3fb4867f91"
     },
-    "@std/cli@1.0.6": {
-      "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
-    },
-    "@std/encoding@1.0.5": {
-      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
+    "@std/cli@1.0.7": {
+      "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
     },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
     },
     "@std/fs@1.0.6": {
-      "integrity": "42b56e1e41b75583a21d5a37f6a6a27de9f510bcd36c0c85791d685ca0b85fa2",
-      "dependencies": [
-        "jsr:@std/path@^1.0.8"
-      ]
-    },
-    "@std/html@1.0.3": {
-      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
-    },
-    "@std/http@1.0.11": {
-      "integrity": "f1928e69e7dcf1664e22d153934cb866bf31e1bbe4bc59f8ac1b4d0e98cb7558",
-      "dependencies": [
-        "jsr:@std/cli@^1.0.6",
-        "jsr:@std/encoding",
-        "jsr:@std/fmt@^1.0.3",
-        "jsr:@std/html",
-        "jsr:@std/media-types",
-        "jsr:@std/net",
-        "jsr:@std/path@^1.0.8",
-        "jsr:@std/streams"
-      ]
+      "integrity": "42b56e1e41b75583a21d5a37f6a6a27de9f510bcd36c0c85791d685ca0b85fa2"
     },
     "@std/internal@1.0.5": {
       "integrity": "54a546004f769c1ac9e025abd15a76b6671ddc9687e2313b67376125650dc7ba"
@@ -93,17 +57,8 @@
     "@std/io@0.225.0": {
       "integrity": "c1db7c5e5a231629b32d64b9a53139445b2ca640d828c26bf23e1c55f8c079b3"
     },
-    "@std/media-types@1.1.0": {
-      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
-    },
-    "@std/net@1.0.4": {
-      "integrity": "2f403b455ebbccf83d8a027d29c5a9e3a2452fea39bb2da7f2c04af09c8bc852"
-    },
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
-    },
-    "@std/streams@1.0.8": {
-      "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3"
     },
     "@zip-js/zip-js@2.7.53": {
       "integrity": "acea5bd8e01feb3fe4c242cfbde7d33dd5e006549a4eb1d15283bc0c778ed672"
@@ -117,12 +72,9 @@
   "workspace": {
     "dependencies": [
       "jsr:@astral/astral@~0.4.5",
-      "jsr:@hono/hono@^4.5.5",
       "jsr:@std/assert@^1.0.2",
-      "jsr:@std/cli@1.0.6",
+      "jsr:@std/cli@1.0.7",
       "jsr:@std/fmt@1",
-      "jsr:@std/fs@^1.0.1",
-      "jsr:@std/http@^1.0.11",
       "npm:md4w@~0.2.6"
     ]
   }
