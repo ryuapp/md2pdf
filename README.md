@@ -29,7 +29,7 @@ We can specify CSS file used in the front matter of markdown.
 
 ```md
 ---
-css: ./github.css
+stylesheet: ./github.css
 ---
 
 # Hello World

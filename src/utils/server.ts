@@ -31,12 +31,12 @@ export function launchHttpServer(
       try {
         const file = extract(fileContent);
         const frontMatter = parse(file.frontMatter) as {
-          css?: string;
+          stylesheet?: string;
         };
         markdown = file.body;
-        if (frontMatter && frontMatter.css) {
-          const cssPath = resolve(join(path, "..", frontMatter.css));
-          css = decoder.decode(await Deno.readFile(cssPath));
+        if (frontMatter && frontMatter.stylesheet) {
+          const stylesheetPath = resolve(join(path, "..", frontMatter.stylesheet));
+          css = decoder.decode(await Deno.readFile(stylesheetPath));
         }
       } catch (_e) {
         markdown = fileContent;
