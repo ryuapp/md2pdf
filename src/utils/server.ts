@@ -1,6 +1,9 @@
 import { init as initMd4w, mdToHtml } from "md4w";
 import type { MdToPdfOptions } from "../types.ts";
 import { getFilename } from "./filename.ts";
+import { extract } from "@std/front-matter/yaml";
+import { parse } from "@std/yaml/parse";
+import { join, resolve } from "@std/path";
 
 export const DEFAULT_PORT = 33433;
 
@@ -20,12 +23,29 @@ export function launchHttpServer(
 
     if (url.pathname === "/") {
       const decoder = new TextDecoder("utf-8");
-      const css = options?.css
+      const fileContent = decoder.decode(await Deno.readFile(path));
+
+      let markdown = "";
+      let css = "";
+      // Front matter
+      try {
+        const file = extract(fileContent);
+        const frontMatter = parse(file.frontMatter) as {
+          css?: string;
+        };
+        markdown = file.body;
+        if (frontMatter && frontMatter.css) {
+          const cssPath = resolve(join(path, "..", frontMatter.css));
+          css = decoder.decode(await Deno.readFile(cssPath));
+        }
+      } catch (_e) {
+        markdown = fileContent;
+      }
+      css = options?.css
         ? decoder.decode(await Deno.readFile(options?.css))
-        : "";
-      const content = mdToHtml(
-        decoder.decode(await Deno.readFile(path)),
-      );
+        : css;
+
+      const content = mdToHtml(markdown);
       const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
       return new Response(
         `<html>
