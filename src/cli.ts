@@ -25,24 +25,6 @@ import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
 import type { MdToPdfOptions } from "./types.ts";
 
-async function validateArgs(
-  args: {
-    css?: string;
-  },
-): Promise<boolean> {
-  if (args.css) {
-    try {
-      await Deno.lstat(args.css);
-    } catch (_e) {
-      console.error(
-        `${brightRed("error")}: Set CSS file is not found: ${args.css}`,
-      );
-      return false;
-    }
-  }
-  return true;
-}
-
 function printHelp(): void {
   const help = `md2pdf: ${
     green("A simple CLI tool for converting markdown to PDF.")
@@ -53,7 +35,7 @@ ${gray("Usage:")} ${green("md2pdf [OPTION]... [FILE]...")}
 ${yellow("Options:")}
   ${green("-w, --watch")}    Watch for file changes.
   ${green("-h, --help")}     Print help.
-  ${green("--css")}          Set CSS file used for rendering.`;
+  ${green("--stylesheet")}   Set CSS file path used for rendering.`;
   console.log(help);
 }
 
@@ -78,12 +60,10 @@ async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
 
 const args = await parseArgs(Deno.args, {
   boolean: ["w", "watch", "h", "help"],
-  string: ["css"],
+  string: ["stylesheet"],
 });
 
-if (!(await validateArgs(args))) {
-  Deno.exit(1);
-} else if (args.h || args.help) {
+if (args.h || args.help) {
   printHelp();
   Deno.exit(0);
 }
