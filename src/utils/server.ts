@@ -3,7 +3,7 @@ import type { MdToPdfOptions } from "../types.ts";
 import { getFilename } from "./filename.ts";
 import { extract } from "@std/front-matter/yaml";
 import { parse } from "@std/yaml/parse";
-import { join, resolve } from "@std/path";
+import { join } from "@std/path";
 
 export const DEFAULT_PORT = 33433;
 
@@ -26,7 +26,7 @@ export function launchHttpServer(
       const fileContent = decoder.decode(await Deno.readFile(path));
 
       let markdown = "";
-      let css = "";
+      let stylesheet = "";
       // Front matter
       try {
         const file = extract(fileContent);
@@ -35,15 +35,12 @@ export function launchHttpServer(
         };
         markdown = file.body;
         if (frontMatter && frontMatter.stylesheet) {
-          const stylesheetPath = resolve(join(path, "..", frontMatter.stylesheet));
-          css = decoder.decode(await Deno.readFile(stylesheetPath));
+          stylesheet = join(path, "..", frontMatter.stylesheet);
         }
       } catch (_e) {
         markdown = fileContent;
       }
-      css = options?.css
-        ? decoder.decode(await Deno.readFile(options?.css))
-        : css;
+      stylesheet = options?.css ? options?.css : stylesheet;
 
       const content = mdToHtml(markdown);
       const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
@@ -51,7 +48,7 @@ export function launchHttpServer(
         `<html>
             <head>
             <title>${title}</title>
-            <style>${css}</style>
+            ${stylesheet && `<link rel="stylesheet" href="${stylesheet}" />`}
             </head>
             <body>
               ${content}

@@ -1,5 +1,5 @@
 ---
-css: ./bluecode.css
+stylesheet: bluecode.css
 ---
 
 # Blue Code
