@@ -23,6 +23,18 @@ Options:
   --css          Set CSS file used for rendering.
 ```
 
+## Front matter (Experimental)
+
+We can specify CSS file used in the front matter of markdown.
+
+```md
+---
+css: ./github.css
+---
+
+# Hello World
+```
+
 ## Related
 
 - [md-to-pdf](https://github.com/simonhaenisch/md-to-pdf) - Markdown to PDF CLI
