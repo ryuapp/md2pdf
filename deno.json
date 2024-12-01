@@ -10,7 +10,7 @@
     "dev": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -- README.md",
     "dev:all": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -w --css=src/testdata/bluecode.css -- README.md",
     "dev:help": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --help",
-    "dev:css": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --css=src/testdata/bluecode.css -- README.md",
+    "dev:css": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -- ./src/testdata/bluecode.md",
     "dev:invalidcss": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --css=src/testdata/redcode.css -- README.md",
     "dev:watch": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --watch -- README.md"
   },
@@ -19,6 +19,9 @@
     "@std/assert": "jsr:@std/assert@^1.0.2",
     "@std/cli": "jsr:@std/cli@1.0.7",
     "@std/fmt": "jsr:@std/fmt@^1",
+    "@std/front-matter": "jsr:@std/front-matter@^1.0.5",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
     "md4w": "npm:md4w@^0.2.6"
   },
   "exclude": [".gitattributes", ".github", "src/testdata", "**/*/*_test.ts"]

@@ -6,12 +6,18 @@
     "jsr:@std/assert@^1.0.2": "1.0.8",
     "jsr:@std/async@1": "1.0.9",
     "jsr:@std/cli@1.0.7": "1.0.7",
+    "jsr:@std/collections@^1.0.5": "1.0.9",
     "jsr:@std/fmt@1": "1.0.3",
     "jsr:@std/fmt@1.0.3": "1.0.3",
+    "jsr:@std/front-matter@^1.0.5": "1.0.5",
     "jsr:@std/fs@1": "1.0.6",
     "jsr:@std/internal@^1.0.5": "1.0.5",
     "jsr:@std/io@0.225.0": "0.225.0",
+    "jsr:@std/path@*": "1.0.8",
     "jsr:@std/path@1": "1.0.8",
+    "jsr:@std/path@^1.0.8": "1.0.8",
+    "jsr:@std/toml@^1.0.1": "1.0.1",
+    "jsr:@std/yaml@^1.0.5": "1.0.5",
     "jsr:@zip-js/zip-js@^2.7.52": "2.7.53",
     "npm:md4w@~0.2.6": "0.2.6"
   },
@@ -22,7 +28,7 @@
         "jsr:@deno-library/progress",
         "jsr:@std/async",
         "jsr:@std/fs",
-        "jsr:@std/path",
+        "jsr:@std/path@1",
         "jsr:@zip-js/zip-js"
       ]
     },
@@ -45,8 +51,18 @@
     "@std/cli@1.0.7": {
       "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
     },
+    "@std/collections@1.0.9": {
+      "integrity": "4f58104ead08a04a2199374247f07befe50ba01d9cca8cbb23ab9a0419921e71"
+    },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
+    },
+    "@std/front-matter@1.0.5": {
+      "integrity": "abddc64030a33eb5bc524b8c73e7c417cea09177aaeb4abf75a56b540c4b6e60",
+      "dependencies": [
+        "jsr:@std/toml",
+        "jsr:@std/yaml"
+      ]
     },
     "@std/fs@1.0.6": {
       "integrity": "42b56e1e41b75583a21d5a37f6a6a27de9f510bcd36c0c85791d685ca0b85fa2"
@@ -59,6 +75,15 @@
     },
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    },
+    "@std/toml@1.0.1": {
+      "integrity": "b55b407159930f338d384b1f8fd317c8e8a35e27ebb8946155f49e3a158d16c4",
+      "dependencies": [
+        "jsr:@std/collections"
+      ]
+    },
+    "@std/yaml@1.0.5": {
+      "integrity": "71ba3d334305ee2149391931508b2c293a8490f94a337eef3a09cade1a2a2742"
     },
     "@zip-js/zip-js@2.7.53": {
       "integrity": "acea5bd8e01feb3fe4c242cfbde7d33dd5e006549a4eb1d15283bc0c778ed672"
@@ -75,6 +100,9 @@
       "jsr:@std/assert@^1.0.2",
       "jsr:@std/cli@1.0.7",
       "jsr:@std/fmt@1",
+      "jsr:@std/front-matter@^1.0.5",
+      "jsr:@std/path@^1.0.8",
+      "jsr:@std/yaml@^1.0.5",
       "npm:md4w@~0.2.6"
     ]
   }
