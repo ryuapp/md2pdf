@@ -40,7 +40,7 @@ export function launchHttpServer(
       } catch (_e) {
         markdown = fileContent;
       }
-      stylesheet = options?.css ? options?.css : stylesheet;
+      stylesheet = options?.stylesheet ?? stylesheet;
 
       const content = mdToHtml(markdown);
       const title = getFilename(path.split("/").at(-1) || "") || "Untitled";

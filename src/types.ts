@@ -1,3 +1,3 @@
 export type MdToPdfOptions = {
-  css?: string;
+  stylesheet?: string;
 };
