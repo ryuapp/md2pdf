@@ -1,5 +1,5 @@
 import { launch } from "@astral/astral";
-import { DEFAULT_PORT, launchHttpServer } from "./utils/server.ts";
+import { launchHttpServer } from "./utils/server.ts";
 import type { MdToPdfOptions } from "./types.ts";
 
 /**
@@ -20,7 +20,7 @@ export async function mdToPdf(
   const server = launchHttpServer(path, options);
 
   const browser = await launch();
-  const page = await browser.newPage(`http://localhost:${DEFAULT_PORT}`);
+  const page = await browser.newPage(`http://localhost:${server.addr.port}`);
   const pdf = await page.pdf();
 
   // Close the browser and the server
