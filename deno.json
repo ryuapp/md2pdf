@@ -6,6 +6,7 @@
     "./cli": "./src/cli.ts"
   },
   "tasks": {
+    "test": "deno test --doc -A",
     "cli": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts --",
     "dev": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -- README.md",
     "dev:all": "deno run --allow-read --allow-write --allow-env --allow-net=0.0.0.0,127.0.0.1 --allow-run ./src/cli.ts -w --stylesheet=src/testdata/bluecode.css -- README.md",
