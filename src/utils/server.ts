@@ -5,8 +5,6 @@ import { extract } from "@std/front-matter/yaml";
 import { parse } from "@std/yaml/parse";
 import { join } from "@std/path";
 
-export const DEFAULT_PORT = 33433;
-
 await initMd4w("small");
 
 /**
@@ -71,7 +69,7 @@ export function launchHttpServer(
     return notFound();
   };
 
-  return Deno.serve({ onListen: () => "", port: DEFAULT_PORT }, handler);
+  return Deno.serve({ onListen: () => "", port: 0 }, handler);
 }
 
 /**
