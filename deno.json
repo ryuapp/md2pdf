@@ -23,7 +23,9 @@
     "@std/front-matter": "jsr:@std/front-matter@^1.0.5",
     "@std/path": "jsr:@std/path@^1.0.8",
     "@std/yaml": "jsr:@std/yaml@^1.0.5",
-    "md4w": "npm:md4w@^0.2.6"
+    "md4w": "npm:md4w@^0.2.6",
+    "node-html-parser": "npm:node-html-parser@^7.0.1",
+    "shiki": "npm:shiki@^1.26.1"
   },
   "exclude": [".gitattributes", ".github", "src/testdata", "**/*/*_test.ts"]
 }

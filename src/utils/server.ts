@@ -1,11 +1,9 @@
-import { init as initMd4w, mdToHtml } from "md4w";
 import type { MdToPdfOptions } from "../types.ts";
 import { getFilename } from "./filename.ts";
 import { extract } from "@std/front-matter/yaml";
 import { parse } from "@std/yaml/parse";
 import { join } from "@std/path";
-
-await initMd4w("small");
+import { markdownToHtml } from "./markdown-to-html.ts";
 
 /**
  * Launch a HTTP server for serving converted markdown to HTML.
@@ -40,7 +38,7 @@ export function launchHttpServer(
       }
       stylesheet = options?.stylesheet ?? stylesheet;
 
-      const content = mdToHtml(markdown);
+      const content = markdownToHtml(markdown);
       const title = getFilename(path.split("/").at(-1) || "") || "Untitled";
       return new Response(
         `<html>
