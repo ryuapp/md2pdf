@@ -44,13 +44,19 @@ export function launchHttpServer(
         `<html>
             <head>
             <title>${title}</title>
-            ${stylesheet && `<link rel="stylesheet" href="${stylesheet}" />`}
+            ${
+          stylesheet
+            ? `<link rel="stylesheet" href="${stylesheet}" />`
+            : `<style>${await Deno.readTextFile(
+              new URL("./markdown.css", import.meta.url),
+            )}</style>`
+        }
             </head>
             <body>
               ${content}
             </body>
           </html>`,
-        { headers: { "Content-Type": "text/html" } },
+        { headers: { "Content-Type": "text/html;charset=UTF-8" } },
       );
     } else {
       const filePath = "." + decodeURI(url.pathname);

@@ -1,8 +1,8 @@
 import { parse } from "node-html-parser";
-import { createHighlighter } from "shiki/bundle/web";
+import { type bundledThemes, createHighlighter } from "shiki/bundle/web";
 import { init as initMd4w, mdToHtml } from "md4w";
 
-const theme = "github-light";
+const theme = "github-dark-dimmed" satisfies keyof typeof bundledThemes;
 const themes = [theme];
 const langs = [
   "html",
