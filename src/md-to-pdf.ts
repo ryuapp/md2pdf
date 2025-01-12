@@ -21,7 +21,7 @@ export async function mdToPdf(
 
   const browser = await launch();
   const page = await browser.newPage(`http://localhost:${server.addr.port}`);
-  const pdf = await page.pdf();
+  const pdf = await page.pdf({ printBackground: true });
 
   // Close the browser and the server
   await browser.close();
