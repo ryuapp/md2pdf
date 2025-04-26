@@ -1,5 +1,7 @@
 # md2pdf
 
+[![JSR](https://jsr.io/badges/@ryu/md2pdf)](https://jsr.io/@ryu/md2pdf)
+
 A simple CLI tool for converting markdown to PDF.
 
 ## Installation
