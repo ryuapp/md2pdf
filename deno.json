@@ -16,16 +16,16 @@
     "dev:watch": "deno run --A ./src/cli.ts --watch -- README.md"
   },
   "imports": {
-    "@astral/astral": "jsr:@astral/astral@^0.4.5",
-    "@std/assert": "jsr:@std/assert@^1.0.2",
-    "@std/cli": "jsr:@std/cli@1.0.7",
-    "@std/fmt": "jsr:@std/fmt@^1",
-    "@std/front-matter": "jsr:@std/front-matter@^1.0.5",
-    "@std/path": "jsr:@std/path@^1.0.8",
-    "@std/yaml": "jsr:@std/yaml@^1.0.5",
+    "@astral/astral": "jsr:@astral/astral@^0.5.2",
+    "@std/assert": "jsr:@std/assert@^1.0.13",
+    "@std/cli": "jsr:@std/cli@1.0.17",
+    "@std/fmt": "jsr:@std/fmt@^1.0.7",
+    "@std/front-matter": "jsr:@std/front-matter@^1.0.9",
+    "@std/path": "jsr:@std/path@^1.0.9",
+    "@std/yaml": "jsr:@std/yaml@^1.0.6",
     "md4w": "npm:md4w@^0.2.6",
     "node-html-parser": "npm:node-html-parser@^7.0.1",
-    "shiki": "npm:shiki@^1.26.1"
+    "shiki": "npm:shiki@^3.3.0"
   },
   "exclude": [".gitattributes", ".github", "src/testdata", "**/*/*_test.ts"]
 }
