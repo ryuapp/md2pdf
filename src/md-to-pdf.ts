@@ -1,4 +1,4 @@
-import { launch } from "@astral/astral";
+import * as playwright from "playwright-core";
 import { launchHttpServer } from "./utils/server.ts";
 import type { MdToPdfOptions } from "./types.ts";
 
@@ -19,10 +19,12 @@ export async function mdToPdf(
 ): Promise<Uint8Array> {
   const server = launchHttpServer(path, options);
 
-  const browser = await launch();
-  const page = await browser.newPage(`http://localhost:${server.addr.port}`);
-  const pdf = await page.pdf({ printBackground: true });
+  const browser = await playwright.chromium.launch({ channel: "chrome" });
+  const page = await browser.newPage();
+  await page.goto(`http://localhost:${server.addr.port}`);
+  await page.waitForLoadState("domcontentloaded");
 
+  const pdf = await page.pdf({ printBackground: true });
   // Close the browser and the server
   await browser.close();
   await server.shutdown();

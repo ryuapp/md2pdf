@@ -6,6 +6,8 @@ A simple CLI tool for converting markdown to PDF.
 
 ## Installation
 
+To run it, you need to have [Google Chrome](https://www.google.com/chrome/) installed separately from the CLI.
+
 ```sh
 deno install -grA jsr:@ryu/md2pdf/cli
 ```

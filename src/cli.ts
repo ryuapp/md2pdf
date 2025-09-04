@@ -24,7 +24,6 @@ import {
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
 import type { MdToPdfOptions } from "./types.ts";
-import { getBinary } from "@astral/astral";
 
 function printHelp(): void {
   const help = `md2pdf: ${
@@ -89,10 +88,6 @@ if (args._) {
     }
   }
 }
-
-// Prepare browser
-// If the browser is not installed, download it
-await getBinary("chrome");
 
 if (paths.length < 1) {
   const exitCode = args._.length ? 1 : 0;
