@@ -2,8 +2,13 @@ import type { MdToPdfOptions } from "../types.ts";
 import { getFilename } from "./filename.ts";
 import { extract } from "@std/front-matter/yaml";
 import { parse } from "@std/yaml/parse";
-import { join } from "@std/path";
+import { fromFileUrl, join } from "@std/path";
 import { markdownToHtml } from "./markdown-to-html.ts";
+
+// Default StyleSheet
+const defaultStylesheetPath = fromFileUrl(
+  new URL("./markdown.css", import.meta.url),
+);
 
 /**
  * Launch a HTTP server for serving converted markdown to HTML.
@@ -47,9 +52,7 @@ export function launchHttpServer(
             ${
           stylesheet
             ? `<link rel="stylesheet" href="${stylesheet}" />`
-            : `<style>${await Deno.readTextFile(
-              new URL("./markdown.css", import.meta.url),
-            )}</style>`
+            : `<style>${await Deno.readTextFile(defaultStylesheetPath)}</style>`
         }
             </head>
             <body>
