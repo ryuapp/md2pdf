@@ -1,4 +1,4 @@
-* {
+export const defaultStylesheet = `* {
   box-sizing: border-box;
 }
 
@@ -16,3 +16,4 @@ pre {
   border-radius: 0.125rem;
   padding: 0.8rem;
 }
+`;
