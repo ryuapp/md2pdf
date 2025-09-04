@@ -13,7 +13,7 @@
     "dev:help": "deno run -A ./src/cli.ts --help",
     "dev:css": "deno run -A ./src/cli.ts -- ./src/testdata/bluecode.md",
     "dev:invalidcss": "deno run -A ./src/cli.ts --stylesheet=src/testdata/redcode.css -- README.md",
-    "dev:watch": "deno run --A ./src/cli.ts --watch -- README.md"
+    "dev:watch": "deno run -A ./src/cli.ts --watch -- README.md"
   },
   "imports": {
     "playwright-core": "npm:playwright-core@^1.55.0",
