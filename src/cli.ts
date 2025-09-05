@@ -20,10 +20,12 @@ import {
   underline,
   yellow,
 } from "@std/fmt/colors";
-import { mdToPdf } from "./md-to-pdf.ts";
-import { getFilename } from "./utils/filename.ts";
 import { createWaveAnimation } from "./animation.ts";
-import type { MdToPdfOptions } from "./types.ts";
+import {
+  generatePdfFromMarkdown,
+  generatePdfFromStdin,
+} from "./generate-pdf.ts";
+import { getFilename } from "./utils/filename.ts";
 import denoJson from "../deno.json" with { type: "json" };
 
 function printHelp(): void {
@@ -41,23 +43,6 @@ ${yellow("Options:")}
   console.log(help);
 }
 
-async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
-  const pdfName = getFilename(path) + ".pdf";
-
-  const waveAnimation = createWaveAnimation("generating PDF from", path);
-  waveAnimation.start();
-  await mdToPdf(path, options).then(
-    (pdf) => {
-      Deno.writeFileSync(
-        pdfName,
-        pdf,
-      );
-      waveAnimation.stop();
-      console.log(green("✓") + " generated " + underline(pdfName));
-    },
-  );
-}
-
 // Inline
 
 const args = parseArgs(Deno.args, {
@@ -72,6 +57,16 @@ if (args.v || args.version) {
 
 if (args.h || args.help) {
   printHelp();
+  Deno.exit(0);
+}
+
+// Check if input is piped
+if (!Deno.stdin.isTerminal()) {
+  // Handle piped input - output to stdout
+  const waveAnimation = createWaveAnimation("generating PDF from", "stdin");
+  waveAnimation.start();
+  await generatePdfFromStdin(args);
+  waveAnimation.stop();
   Deno.exit(0);
 }
 
@@ -98,6 +93,7 @@ if (paths.length < 1) {
         brightRed("error")
       }: Set a valid markdown file path you wanna convert to PDF\n`,
       "      e.g.) md2pdf README.md\n",
+      "      e.g.) cat README.md | md2pdf\n",
     );
     console.error("For more information, try '--help'.");
   } else {
@@ -108,7 +104,12 @@ if (paths.length < 1) {
 
 await (async () => {
   for (let i = 0; i < paths.length; i++) {
-    await generatePdfFromMarkdown(paths[i], args);
+    const pdfPath = getFilename(paths[i]) + ".pdf";
+    const waveAnimation = createWaveAnimation("generating PDF from", paths[i]);
+    waveAnimation.start();
+    await generatePdfFromMarkdown(paths[i], pdfPath, args);
+    waveAnimation.stop();
+    console.log(green("✓") + " generated " + underline(pdfPath));
   }
 })();
 
@@ -129,7 +130,15 @@ if (args.w || args.watch) {
       ) {
         pastRealPath = realPath;
         pastMTime = stat.mtime?.toString();
-        await generatePdfFromMarkdown(paths[0], args);
+        const pdfPath = getFilename(paths[0]) + ".pdf";
+        const waveAnimation = createWaveAnimation(
+          "generating PDF from",
+          paths[0],
+        );
+        waveAnimation.start();
+        await generatePdfFromMarkdown(paths[0], pdfPath, args);
+        waveAnimation.stop();
+        console.log(green("✓") + " generated " + underline(pdfPath));
       }
     }
   }

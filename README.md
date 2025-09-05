@@ -28,6 +28,19 @@ Options:
   --stylesheet   Set CSS file path used for rendering.
 ```
 
+### `stdin` / `stdout` Support
+
+md2pdf supports reading from `stdin` and writing to `stdout`.\
+You can pipe markdown content directly to md2pdf, making it easy to integrate with other CLI tools:
+
+```sh
+# Convert piped input to PDF
+cat input.md | md2pdf > path/to/output.pdf
+
+# Use with curl to convert remote markdown
+curl -s https://raw.githubusercontent.com/ryuapp/md2pdf/main/README.md | md2pdf > README.pdf
+```
+
 ## Front matter (Experimental)
 
 We can specify CSS file used in the front matter of markdown.

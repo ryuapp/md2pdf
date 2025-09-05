@@ -36,7 +36,7 @@ export function createWaveAnimation(
     }
 
     const encoder = new TextEncoder();
-    Deno.stdout.writeSync(encoder.encode(`\r${coloredText}`));
+    Deno.stderr.writeSync(encoder.encode(`\r${coloredText}`));
     frame++;
   };
 
@@ -51,7 +51,7 @@ export function createWaveAnimation(
         clearInterval(intervalId);
         intervalId = null;
         const encoder = new TextEncoder();
-        Deno.stdout.writeSync(
+        Deno.stderr.writeSync(
           encoder.encode(`\r${" ".repeat(fullText.length + 2)}\r`),
         );
       }
