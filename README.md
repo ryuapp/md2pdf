@@ -25,6 +25,7 @@ Usage: md2pdf [OPTION]... [FILE]...
 Options:
   -w, --watch    Watch for file changes.
   -h, --help     Print help.
+  -v, --version  Print version.
   --stylesheet   Set CSS file path used for rendering.
 
 Examples:

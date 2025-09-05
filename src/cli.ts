@@ -31,15 +31,13 @@ ${gray("       cat FILE.md | md2pdf > output.pdf")}
 ${yellow("Options:")}
   ${green("-w, --watch")}    Watch for file changes.
   ${green("-h, --help")}     Print help.
+  ${green("-v, --version")}  Print version.
   ${green("--stylesheet")}   Set CSS file path used for rendering.
 
 ${yellow("Examples:")}
   ${
     green("md2pdf README.md")
-  }                     Convert README.md to README.pdf
-  ${
-    green("cat README.md | md2pdf > README.pdf")
-  }  Convert piped input to README.pdf`;
+  }                     Convert README.md to README.pdf`;
   console.log(help);
 }
 
