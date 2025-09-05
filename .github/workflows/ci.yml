@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        deno-version: [v2.2.x, v2.4.x, v2.x]
+        deno-version: [v2.4.x, v2.x]
     
     steps:
       - name: Checkout
