@@ -20,11 +20,16 @@ Note: If you want to update the CLI, please reinstall with `-f` flag.
 md2pdf: A simple CLI tool for converting markdown to PDF.
 
 Usage: md2pdf [OPTION]... [FILE]...
+       cat FILE.md | md2pdf > output.pdf
 
 Options:
   -w, --watch    Watch for file changes.
   -h, --help     Print help.
   --stylesheet   Set CSS file path used for rendering.
+
+Examples:
+  md2pdf README.md                     Convert README.md to README.pdf
+  cat README.md | md2pdf > README.pdf  Convert piped input to README.pdf
 ```
 
 ## Front matter (Experimental)
