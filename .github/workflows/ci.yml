@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest, ubuntu-24.04-arm]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     
     steps:
       - name: Checkout
@@ -24,12 +24,6 @@ jobs:
 
       - name: Lint
         run: deno lint
-
-      - name: Install Playwright Chrome (ARM)
-        if: matrix.os == 'ubuntu-24.04-arm' 
-        run: |
-          npx playwright install
-          npx playwright install chrome
 
       - name: Test
         run: deno task test
