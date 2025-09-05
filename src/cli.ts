@@ -11,7 +11,6 @@
  * @module
  */
 
-import { Spinner } from "@std/cli/unstable-spinner";
 import { parseArgs } from "@std/cli/parse-args";
 import {
   bgBlue,
@@ -23,6 +22,7 @@ import {
 } from "@std/fmt/colors";
 import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
+import { createWaveAnimation } from "./animation.ts";
 import type { MdToPdfOptions } from "./types.ts";
 
 function printHelp(): void {
@@ -42,16 +42,16 @@ ${yellow("Options:")}
 async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
   const pdfName = getFilename(path) + ".pdf";
 
-  spinner.message = " generating PDF from " + underline(path);
-  spinner.start();
+  const waveAnimation = createWaveAnimation("generating PDF from", path);
+  waveAnimation.start();
   await mdToPdf(path, options).then(
     (pdf) => {
       Deno.writeFileSync(
         pdfName,
         pdf,
       );
-      spinner.stop();
-      console.log("✅ generated " + underline(pdfName));
+      waveAnimation.stop();
+      console.log(green("✓") + " generated " + underline(pdfName));
     },
   );
 }
@@ -67,12 +67,6 @@ if (args.h || args.help) {
   printHelp();
   Deno.exit(0);
 }
-
-const spinner = new Spinner({
-  message: "Loading...",
-  color: "yellow",
-  interval: 50,
-});
 
 const paths: Array<string> = [];
 if (args._) {
