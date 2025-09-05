@@ -24,6 +24,7 @@ import { mdToPdf } from "./md-to-pdf.ts";
 import { getFilename } from "./utils/filename.ts";
 import { createWaveAnimation } from "./animation.ts";
 import type { MdToPdfOptions } from "./types.ts";
+import denoJson from "../deno.json" with { type: "json" };
 
 function printHelp(): void {
   const help = `md2pdf: ${
@@ -58,10 +59,15 @@ async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
 
 // Inline
 
-const args = await parseArgs(Deno.args, {
-  boolean: ["w", "watch", "h", "help"],
+const args = parseArgs(Deno.args, {
+  boolean: ["w", "watch", "h", "help", "v", "version"],
   string: ["stylesheet"],
 });
+
+if (args.v || args.version) {
+  console.log("md2pdf " + denoJson.version);
+  Deno.exit(0);
+}
 
 if (args.h || args.help) {
   printHelp();
