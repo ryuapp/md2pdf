@@ -26,18 +26,12 @@ function printHelp(): void {
   }
 
 ${gray("Usage:")} ${green("md2pdf [OPTION]... [FILE]...")}
-${gray("       cat FILE.md | md2pdf > output.pdf")}
 
 ${yellow("Options:")}
   ${green("-w, --watch")}    Watch for file changes.
   ${green("-h, --help")}     Print help.
   ${green("-v, --version")}  Print version.
-  ${green("--stylesheet")}   Set CSS file path used for rendering.
-
-${yellow("Examples:")}
-  ${
-    green("md2pdf README.md")
-  }                     Convert README.md to README.pdf`;
+  ${green("--stylesheet")}   Set CSS file path used for rendering.`;
   console.log(help);
 }
 
