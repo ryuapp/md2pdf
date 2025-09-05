@@ -6,8 +6,12 @@ on:
     branches: [main]
 
 jobs:
-  ci:
-    runs-on: macos-latest
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,4 +29,5 @@ jobs:
         run: deno task test
 
       - name: Dry run Publish
+        if: matrix.os == 'ubuntu-latest'
         run: deno publish --dry-run
