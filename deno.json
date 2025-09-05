@@ -11,6 +11,7 @@
     "dev": "deno run -A ./src/cli.ts -- README.md",
     "dev:all": "deno run -A ./src/cli.ts -w --stylesheet=src/testdata/bluecode.css -- README.md",
     "dev:help": "deno run -A ./src/cli.ts --help",
+    "dev:version": "deno run -A ./src/cli.ts --version",
     "dev:css": "deno run -A ./src/cli.ts -- ./src/testdata/bluecode.md",
     "dev:invalidcss": "deno run -A ./src/cli.ts --stylesheet=src/testdata/redcode.css -- README.md",
     "dev:watch": "deno run -A ./src/cli.ts --watch -- README.md"
