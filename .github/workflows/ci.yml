@@ -27,7 +27,7 @@ jobs:
 
       - name: Install Playwright Chrome (ARM)
         if: matrix.os == 'ubuntu-24.04-arm' 
-        run: deno -A npm:playwright install chrome
+        run: npx playwright install chrome
 
       - name: Test
         run: deno task test
