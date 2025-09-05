@@ -12,19 +12,12 @@
  */
 
 import { parseArgs } from "@std/cli/parse-args";
-import { join } from "@std/path";
-import {
-  bgBlue,
-  brightRed,
-  gray,
-  green,
-  underline,
-  yellow,
-} from "@std/fmt/colors";
-import { mdToPdf } from "./md-to-pdf.ts";
-import { getFilename } from "./utils/filename.ts";
+import { bgBlue, brightRed, gray, green, yellow } from "@std/fmt/colors";
 import { createWaveAnimation } from "./animation.ts";
-import type { MdToPdfOptions } from "./types.ts";
+import {
+  generatePdfFromMarkdown,
+  generatePdfFromStdin,
+} from "./generate-pdf.ts";
 import denoJson from "../deno.json" with { type: "json" };
 
 function printHelp(): void {
@@ -50,85 +43,6 @@ ${yellow("Examples:")}
   console.log(help);
 }
 
-async function generatePdfFromMarkdown(path: string, options?: MdToPdfOptions) {
-  const pdfName = getFilename(path) + ".pdf";
-
-  const waveAnimation = createWaveAnimation("generating PDF from", path);
-  waveAnimation.start();
-  await mdToPdf(path, options).then(
-    (pdf) => {
-      Deno.writeFileSync(
-        pdfName,
-        pdf,
-      );
-      waveAnimation.stop();
-      console.log(green("✓") + " generated " + underline(pdfName));
-    },
-  );
-}
-
-async function generatePdfFromStdin(options?: MdToPdfOptions) {
-  const waveAnimation = createWaveAnimation("generating PDF from", "stdin");
-  waveAnimation.start();
-
-  // Read all stdin content at once - similar to get-stdin package
-  const chunks: Uint8Array[] = [];
-  const reader = Deno.stdin.readable.getReader();
-
-  try {
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-    }
-  } finally {
-    reader.releaseLock();
-  }
-
-  const markdownContent = new TextDecoder().decode(
-    new Uint8Array(
-      chunks.reduce((acc, chunk) => [...acc, ...chunk], [] as number[]),
-    ),
-  );
-
-  // Create temporary file using Deno's standard approach
-  const tempDir = await Deno.makeTempDir();
-  const tempPath = join(tempDir, "stdin.md");
-  // Cleanup
-  const cleanupTempDir = () => {
-    waveAnimation.stop();
-    try {
-      Deno.removeSync(tempDir, { recursive: true });
-    } catch (error) {
-      console.error(
-        `${brightRed("warning")}: Failed to cleanup temp directory: ${error}`,
-      );
-    }
-  };
-  // Setup cleanup on SIGINT (Ctrl+C) and SIGBREAK (Ctrl + Break)
-  const signalHandler = () => {
-    console.debug("Called Signal Handler");
-    cleanupTempDir();
-    Deno.exit(1);
-  };
-
-  Deno.addSignalListener("SIGINT", signalHandler);
-  Deno.addSignalListener("SIGBREAK", signalHandler);
-  await Deno.writeTextFile(tempPath, markdownContent);
-
-  try {
-    await mdToPdf(tempPath, options).then(
-      (pdf) => {
-        Deno.stdout.writeSync(pdf);
-      },
-    );
-  } finally {
-    Deno.removeSignalListener("SIGINT", signalHandler);
-    Deno.removeSignalListener("SIGBREAK", signalHandler);
-    cleanupTempDir();
-  }
-}
-
 // Inline
 
 const args = parseArgs(Deno.args, {
@@ -149,7 +63,10 @@ if (args.h || args.help) {
 // Check if input is piped
 if (!Deno.stdin.isTerminal()) {
   // Handle piped input - output to stdout
+  const waveAnimation = createWaveAnimation("generating PDF from", "stdin");
+  waveAnimation.start();
   await generatePdfFromStdin(args);
+  waveAnimation.stop();
   Deno.exit(0);
 }
 
@@ -187,7 +104,10 @@ if (paths.length < 1) {
 
 await (async () => {
   for (let i = 0; i < paths.length; i++) {
+    const waveAnimation = createWaveAnimation("generating PDF from", paths[i]);
+    waveAnimation.start();
     await generatePdfFromMarkdown(paths[i], args);
+    waveAnimation.stop();
   }
 })();
 
@@ -208,7 +128,13 @@ if (args.w || args.watch) {
       ) {
         pastRealPath = realPath;
         pastMTime = stat.mtime?.toString();
+        const waveAnimation = createWaveAnimation(
+          "generating PDF from",
+          paths[0],
+        );
+        waveAnimation.start();
         await generatePdfFromMarkdown(paths[0], args);
+        waveAnimation.stop();
       }
     }
   }
