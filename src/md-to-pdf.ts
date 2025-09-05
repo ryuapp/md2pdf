@@ -24,7 +24,16 @@ export async function mdToPdf(
   await page.goto(`http://localhost:${server.addr.port}`);
   await page.waitForLoadState("domcontentloaded");
 
-  const pdf = await page.pdf({ printBackground: true });
+  const pdf = await page.pdf({
+    printBackground: true,
+    format: "A4",
+    margin: {
+      top: "36px",
+      right: "36px",
+      bottom: "36px",
+      left: "36px",
+    },
+  });
   // Close the browser and the server
   await browser.close();
   await server.shutdown();
