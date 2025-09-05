@@ -18,7 +18,7 @@
   "imports": {
     "playwright-core": "npm:playwright-core@^1.55.0",
     "@std/assert": "jsr:@std/assert@^1.0.13",
-    "@std/cli": "jsr:@std/cli@1.0.17",
+    "@std/cli": "jsr:@std/cli@^1.0.17",
     "@std/fmt": "jsr:@std/fmt@^1.0.7",
     "@std/front-matter": "jsr:@std/front-matter@^1.0.9",
     "@std/path": "jsr:@std/path@^1.0.9",
