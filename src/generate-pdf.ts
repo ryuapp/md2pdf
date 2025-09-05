@@ -1,22 +1,19 @@
 import { join } from "@std/path";
-import { brightRed, green, underline } from "@std/fmt/colors";
+import { brightRed } from "@std/fmt/colors";
 import { mdToPdf } from "./md-to-pdf.ts";
-import { getFilename } from "./utils/filename.ts";
 import type { MdToPdfOptions } from "./types.ts";
 
 export async function generatePdfFromMarkdown(
-  path: string,
+  markdownPath: string,
+  pdfPath: string,
   options?: MdToPdfOptions,
 ) {
-  const pdfName = getFilename(path) + ".pdf";
-
-  await mdToPdf(path, options).then(
+  await mdToPdf(markdownPath, options).then(
     (pdf) => {
       Deno.writeFileSync(
-        pdfName,
+        pdfPath,
         pdf,
       );
-      console.log(green("✓") + " generated " + underline(pdfName));
     },
   );
 }

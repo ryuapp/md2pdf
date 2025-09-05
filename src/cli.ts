@@ -12,12 +12,20 @@
  */
 
 import { parseArgs } from "@std/cli/parse-args";
-import { bgBlue, brightRed, gray, green, yellow } from "@std/fmt/colors";
+import {
+  bgBlue,
+  brightRed,
+  gray,
+  green,
+  underline,
+  yellow,
+} from "@std/fmt/colors";
 import { createWaveAnimation } from "./animation.ts";
 import {
   generatePdfFromMarkdown,
   generatePdfFromStdin,
 } from "./generate-pdf.ts";
+import { getFilename } from "./utils/filename.ts";
 import denoJson from "../deno.json" with { type: "json" };
 
 function printHelp(): void {
@@ -96,10 +104,12 @@ if (paths.length < 1) {
 
 await (async () => {
   for (let i = 0; i < paths.length; i++) {
+    const pdfPath = getFilename(paths[i]) + ".pdf";
     const waveAnimation = createWaveAnimation("generating PDF from", paths[i]);
     waveAnimation.start();
-    await generatePdfFromMarkdown(paths[i], args);
+    await generatePdfFromMarkdown(paths[i], pdfPath, args);
     waveAnimation.stop();
+    console.log(green("✓") + " generated " + underline(pdfPath));
   }
 })();
 
@@ -120,13 +130,15 @@ if (args.w || args.watch) {
       ) {
         pastRealPath = realPath;
         pastMTime = stat.mtime?.toString();
+        const pdfPath = getFilename(paths[0]) + ".pdf";
         const waveAnimation = createWaveAnimation(
           "generating PDF from",
           paths[0],
         );
         waveAnimation.start();
-        await generatePdfFromMarkdown(paths[0], args);
+        await generatePdfFromMarkdown(paths[0], pdfPath, args);
         waveAnimation.stop();
+        console.log(green("✓") + " generated " + underline(pdfPath));
       }
     }
   }
