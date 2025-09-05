@@ -36,6 +36,7 @@ ${gray("Usage:")} ${green("md2pdf [OPTION]... [FILE]...")}
 ${yellow("Options:")}
   ${green("-w, --watch")}    Watch for file changes.
   ${green("-h, --help")}     Print help.
+  ${green("-v, --version")}  Print version.
   ${green("--stylesheet")}   Set CSS file path used for rendering.`;
   console.log(help);
 }
