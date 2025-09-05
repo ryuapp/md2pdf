@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        deno-version: [v2.2.x, v2.4.x, v2.x]
     
     steps:
       - name: Checkout
@@ -18,6 +19,8 @@ jobs:
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
+        with:
+          deno-version: ${{ matrix.deno-version }}
 
       - name: Format
         run: deno fmt --check
