@@ -1,20 +1,17 @@
 {
   "name": "@ryu/md2pdf",
   "version": "0.8.0",
-  "exports": {
-    ".": "./src/md-to-pdf.ts",
-    "./cli": "./src/cli.ts"
-  },
+  "exports": "./src/cli.ts",
   "tasks": {
     "test": "deno test --doc -A",
-    "cli": "deno run -A ./src/cli.ts --",
-    "dev": "deno run -A ./src/cli.ts -- README.md",
-    "dev:all": "deno run -A ./src/cli.ts -w --stylesheet=src/testdata/bluecode.css -- README.md",
-    "dev:help": "deno run -A ./src/cli.ts --help",
-    "dev:version": "deno run -A ./src/cli.ts --version",
-    "dev:css": "deno run -A ./src/cli.ts -- ./src/testdata/bluecode.md",
-    "dev:invalidcss": "deno run -A ./src/cli.ts --stylesheet=src/testdata/redcode.css -- README.md",
-    "dev:watch": "deno run -A ./src/cli.ts --watch -- README.md"
+    "cli": "deno -A @ryu/md2pdf --",
+    "dev": "deno -A @ryu/md2pdf -- README.md",
+    "dev:all": "deno -A @ryu/md2pdf -w --stylesheet=src/testdata/bluecode.css -- README.md",
+    "dev:help": "deno -A @ryu/md2pdf --help",
+    "dev:version": "deno -A @ryu/md2pdf --version",
+    "dev:css": "deno -A @ryu/md2pdf -- ./src/testdata/bluecode.md",
+    "dev:invalidcss": "deno -A @ryu/md2pdf --stylesheet=src/testdata/redcode.css -- README.md",
+    "dev:watch": "deno -A @ryu/md2pdf --watch -- README.md"
   },
   "imports": {
     "playwright-core": "npm:playwright-core@^1.55.0",
