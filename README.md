@@ -10,7 +10,7 @@ It uses `md4w` to convert markdown to HTML and `playwright-core` (headless Chrom
 To run it, you need to have [Google Chrome](https://www.google.com/chrome/) installed separately from the CLI.
 
 ```sh
-deno install -grA jsr:@ryu/md2pdf/cli
+deno install -grA jsr:@ryu/md2pdf
 ```
 
 Note: If you want to update the CLI, please reinstall with `-f` flag.
