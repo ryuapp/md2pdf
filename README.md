@@ -62,7 +62,7 @@ cat file.md | md2pdf > path/to/output.pdf
 curl -s https://raw.githubusercontent.com/ryuapp/md2pdf/main/README.md | md2pdf > README.pdf
 ```
 
-## Front matter (Experimental)
+### Front matter (Experimental)
 
 We can specify CSS file used in the front matter of markdown.
 
@@ -73,6 +73,10 @@ stylesheet: ./github.css
 
 # Hello World
 ```
+
+## Feedback
+
+Found a bug or have an idea for a new feature? [Please fill out an issue](https://github.com/ryuapp/md2pdf/issues/new).
 
 ## Related
 
