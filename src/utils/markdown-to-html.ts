@@ -40,6 +40,23 @@ const highlighter = await createHighlighter({ themes, langs });
  * Convert markdown to HTML.
  *
  * @param markdown a markdown string
+ *
+ * @example Basic markdown
+ * ```ts
+ * import { assertEquals } from "@std/assert";
+ *
+ * const html = markdownToHtml("# Hello");
+ * assertEquals(html, '<h1>Hello <a class="anchor" aria-hidden="true" id="hello" href="#hello"></a></h1>\n');
+ * ```
+ *
+ * @example Code block with known language
+ * ```ts
+ * import { assertEquals } from "@std/assert";
+ *
+ * const ticks = "``" + "`";
+ * const html = markdownToHtml(`${ticks}ts\nconst x = 1;\n${ticks}`);
+ * assertEquals(html, '<pre class="shiki github-dark-dimmed" style="background-color:#22272e;color:#adbac7" tabindex="0"><code><span class="line"><span style="color:#F47067">const</span><span style="color:#6CB6FF"> x</span><span style="color:#F47067"> =</span><span style="color:#6CB6FF"> 1</span><span style="color:#ADBAC7">;</span></span>\n<span class="line"></span></code></pre>\n');
+ * ```
  */
 export function markdownToHtml(markdown: string): string {
   const dom = parse(mdToHtml(markdown));
