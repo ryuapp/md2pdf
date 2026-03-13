@@ -23,7 +23,7 @@
     "@std/yaml": "jsr:@std/yaml@^1.0.6",
     "md4w": "npm:md4w@^0.2.6",
     "node-html-parser": "npm:node-html-parser@^7.0.1",
-    "shiki": "npm:shiki@^3.3.0"
+    "shiki": "npm:shiki@^4.0.2"
   },
   "fmt": {
     "proseWrap": "preserve"
