@@ -1,3 +1,6 @@
+> [!NOTE]
+> As [Deno is joining Cloudflare](https://deno.com/blog/cloudflare) and development of the Deno runtime is coming to an end, I'm archiving this project as well.
+
 # md2pdf
 
 [![JSR](https://jsr.io/badges/@ryu/md2pdf)](https://jsr.io/@ryu/md2pdf)
